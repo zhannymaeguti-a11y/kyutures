@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KYUTURES | MIL Digital Archive</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Trebuchet MS", Arial, sans-serif;
+    background: #fff7fb;
+    color: #55445d;
+    line-height: 1.7;
+}
+
+header {
+    background: linear-gradient(135deg, #f6cde4, #dcd0ff, #fff0d9);
+    text-align: center;
+    padding: 45px 20px;
+}
+
+header h1 {
+    font-size: clamp(38px, 8vw, 65px);
+    color: #805a91;
+    letter-spacing: 5px;
+}
+
+header p {
+    color: #745c7e;
+    font-size: 16px;
+}
+
+nav {
+    background: #fff;
+    padding: 14px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 3px 12px #bda6c433;
+}
+
+nav button {
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+    background: #f4e5f6;
+    color: #765681;
+    cursor: pointer;
+    font-weight: bold;
+    transition: .2s;
+}
+
+nav button:hover,
+nav button.active {
+    background: #cda9e8;
+    color: white;
+}
+
+.page {
+    display: none;
+    max-width: 1100px;
+    margin: auto;
+    padding: 35px 20px 70px;
+    min-height: 70vh;
+}
+
+.page.active {
+    display: block;
+}
+
+h2 {
+    color: #926ca6;
+    margin-bottom: 15px;
+}
+
+h3 {
+    color: #89639b;
+}
+
+.hero-card,
+.card,
+.lesson-card,
+.member-card {
+    background: white;
+    border-radius: 22px;
+    padding: 25px;
+    box-shadow: 0 5px 20px #9e79a51a;
+    border: 1px solid #f2e4f4;
+}
+
+.hero-card {
+    text-align: center;
+    padding: 45px 25px;
+    background: linear-gradient(135deg, #fff, #fceaf5, #f0eaff);
+}
+
+.hero-card h2 {
+    font-size: 32px;
+}
+
+.hero-card p {
+    max-width: 700px;
+    margin: 12px auto;
+}
+
+.main-button {
+    background: #b58bd0;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 24px;
+    cursor: pointer;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.main-button:hover {
+    background: #956bb2;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.lesson-card {
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.lesson-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px #b58bd044;
+}
+
+.lesson-icon {
+    font-size: 35px;
+}
+
+.lesson-card h3 {
+    margin: 8px 0;
+}
+
+.lesson-card span {
+    color: #a16eb9;
+    font-weight: bold;
+}
+
+#searchInput {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 14px 18px;
+    border: 2px solid #e6cdec;
+    border-radius: 25px;
+    outline: none;
+    font-size: 15px;
+}
+
+#searchInput:focus {
+    border-color: #b58bd0;
+}
+
+.lesson-content {
+    white-space: pre-line;
+    margin-top: 20px;
+    line-height: 1.9;
+}
+
+.lesson-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.lesson-buttons button:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+.member-card {
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+.member-card img {
+    width: 145px;
+    height: 145px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid #f1d9f2;
+    margin-bottom: 12px;
+}
+
+.member-card h3 {
+    margin-bottom: 3px;
+}
+
+.member-introduction {
+    white-space: pre-line;
+    text-align: left;
+    line-height: 1.8;
+    font-size: 14px;
+    margin-top: 15px;
+    padding: 15px;
+    background: #fff6fb;
+    border-radius: 15px;
+}
+
+.member-role {
+    color: #aa83b9;
+    font-weight: bold;
+}
+
+.about-box {
+    margin-top: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    background: #f1e3f4;
+    color: #795e85;
+}
+
+.cat {
+    position: fixed;
+    right: 20px;
+    bottom: 18px;
+    z-index: 20;
+    font-size: 45px;
+    cursor: pointer;
+    animation: floatCat 2s ease-in-out infinite;
+    user-select: none;
+}
+
+@keyframes floatCat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.cat-message {
+    display: none;
+    position: fixed;
+    right: 75px;
+    bottom: 35px;
+    z-index: 20;
+    background: white;
+    color: #805a91;
+    border: 2px solid #e8ccef;
+    border-radius: 18px;
+    padding: 14px;
+    max-width: 230px;
+    box-shadow: 0 5px 15px #0001;
+}
+
+@media (max-width: 600px) {
+    .page {
+        padding: 25px 14px 50px;
+    }
+
+    .hero-card {
+        padding: 30px 18px;
+    }
+
+    nav button {
+        padding: 9px 14px;
+        font-size: 13px;
+    }
+
+    .member-card {
+        padding: 18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>KYUTURES ♡</h1>
+    <p>Our Media and Information Literacy Digital Archive</p>
+    <p>Learn • Explore • Create • Share</p>
+</header>
+
+<nav>
+    <button class="active" onclick="showPage('home', this)">Home</button>
+    <button onclick="showPage('about', this)">About</button>
+    <button onclick="showPage('lessons', this)">Lessons</button>
+    <button onclick="showPage('members', this)">Members</button>
+</nav>
+
+<!-- HOME -->
+<section id="home" class="page active">
+    <div class="hero-card">
+        <h2>Welcome to KYUTURES! ♡</h2>
+        <p>
+            Your little digital scrapbook for Media and Information Literacy.
+            Explore our lessons, discover new knowledge, and enjoy learning
+            with us!
+        </p>
+        <button class="main-button" onclick="showPage('lessons')">
+            Explore Lessons →
+        </button>
+    </div>
+
+    <div class="card about-box">
+        <h2>What is MIL?</h2>
+        <p>
+            Media and Information Literacy teaches us how to access,
+            understand, evaluate, and use media and information responsibly.
+            It helps us become critical thinkers and responsible digital
+            citizens.
+        </p>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="page">
+    <h2 class="section-title">About KYUTURES ♡</h2>
+
+    <div class="card">
+        <h3>Our Digital Archive</h3>
+        <p>
+            KYUTURES is a digital archive created to organize and share
+            our learning materials in Media and Information Literacy.
+            It provides summaries of our lessons in one accessible place.
+        </p>
+
+        <br>
+
+        <h3>Our Purpose</h3>
+        <p>
+            Our purpose is to make learning more organized, creative,
+            and enjoyable. Through this website, students can review
+            important concepts and learn at their own pace.
+        </p>
+
+        <br>
+
+        <h3>Our Goal</h3>
+        <p>
+            We aim to encourage responsible media use, critical thinking,
+            and awareness of the importance of information in everyday life.
+        </p>
+    </div>
+</section>
+
+<!-- LESSONS -->
+<section id="lessons" class="page">
+    <h2 class="section-title">MIL Lessons ♡</h2>
+    <p class="section-title">
+        Explore our eight lessons and review their summaries.
+    </p>
+
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Search a lesson or topic..."
+        oninput="renderLessons()"
+    >
+
+    <div id="lessonList" class="grid"></div>
+    <div id="lessonDetail"></div>
+</section>
+
+<!-- MEMBERS -->
+<section id="members" class="page">
+    <h2 class="section-title">Meet the KYUTURES Team! ♡</h2>
+
+    <div class="card">
+        <p>
+            We are a group of students who worked together to create
+            KYUTURES, a digital archive for Media and Information Literacy.
+            Each member contributed ideas, creativity, and effort to make
+            learning more interesting and enjoyable.
+        </p>
+        <br>
+        <p>
+            Through this website, we aim to share our knowledge, organize
+            our lessons, and help other students understand the different
+            topics in MIL. Get to know the people behind KYUTURES!
+        </p>
+    </div>
+
+    <h2 class="section-title" style="margin-top:35px;">
+        Meet Our Members ♡
+    </h2>
+
+    <div id="memberList" class="grid"></div>
+</section>
+
+<footer>
+    <p>♡ KYUTURES Digital Archive ♡</p>
+    <p>Media and Information Literacy</p>
+</footer>
+
+<div class="cat" onclick="toggleCat()" title="Click the cat!">🐱</div>
+<div class="cat-message" id="catMessage">
+    Meow! Welcome to KYUTURES! ♡ Have fun learning!
+</div>
+
+<script>
+  // =====================================
+// MEMBER INFORMATION
+// =====================================
+
+const members = [
+    {
+        name: "Yza Nicole Dumas",
+        role: "Group Leader",
+        photo: "leader.jpg",
+        introduction: `Hello everyone! I am Yza Nicole Dumas.
+
+I am 18 years old, and I was born on August 8, 2008. That's why my favorite number is 8. My hobbies are reading books and playing volleyball. My favorite color is yellow because it reminds me of the sun, just like me, laging pasikat! HAHAHA.
+
+I can describe myself as a cheerful, funny, and sometimes playful person. I love making jokes and making people laugh. But according to them, maldita raw ako. I don't know why! HAHAHA. Anyway, that's a little introduction about me. Thank you!`
+    },
+    {
+        name: "Chester Jay Delosreyes",
+        role: "Member 1",
+        photo: "memb.jpg",
+        introduction: `Good day everyone! My name is Chester Jay Delosreyes, and I am 18 years old.
+
+I love playing basketball and mobile games because they are fun and help me relax during my free time. I also enjoy spending time with my friends and family. I consider myself a friendly and simple person who likes to have fun and learn new things. I may not be perfect, but I always try my best to improve myself and achieve my goals. That's all, thank you!`
+    },
+    {
+        name: "Jhanica Mae Gutierrez",
+        role: "Member 2",
+        photo: "mem.jpg",
+        introduction: `I am 17 years old, and I helped in creating our MIL website.
+
+Welcome to my little corner! I have a fun side even though I am an introverted person. Madaldal ako sa taong comfortable ako. Mahilig ako mag-enjoy sa simple things at magkaroon ng peaceful moments.
+
+HAVE FUN TO LEARN BAE!`
+    },
+    {
+        name: "Prabjhot Bhinder",
+        role: "Member 3",
+        photo: "membe.jpg",
+        introduction: "Hi Everyone"
+    },
+  ]
+  // =====================================
+// LESSON INFORMATION
+// =====================================
+
+const lessons = [
+{
+    number: 1,
+    icon: "📖",
+    title: "Introduction to Media and Information Literacy",
+    description: "Learn the basics of MIL.",
+    content: `LESSON 1: INTRODUCTION TO MEDIA AND INFORMATION LITERACY
+
+Media and Information Literacy (MIL) teaches us how to access, understand, evaluate, and use media and information responsibly.
+
+KEY CONCEPTS
+
+• Literacy – The ability to read, write, understand, and communicate.
+• Information – Knowledge or facts gained through study, experience, or other sources.
+• Media – Tools or platforms used to communicate messages, such as television, radio, and computers.
+• Media Literacy – The ability to access, analyze, evaluate, and create media.
+• Information Literacy – The ability to recognize, find, evaluate, and communicate information.
+• Technology Literacy – The ability to use technological tools responsibly and effectively.
+
+RESPONSIBLE USE OF MEDIA AND INFORMATION
+
+• Protect your personal information.
+• Ask permission before posting other people's pictures or videos.
+• Think before clicking, posting, or sharing.
+• Keep your passwords safe.
+• Spread positivity online.
+
+LESSON TAKEAWAY
+
+MIL helps us become responsible media users, critical thinkers, and active citizens.`
+},
+{
+    number: 2,
+    icon: "📜",
+    title: "Evolution of Traditional to New Media",
+    description: "Discover the four ages of media.",
+    content: `LESSON 2: EVOLUTION OF TRADITIONAL TO NEW MEDIA
+
+Media has changed throughout history because of technological advancements. Each period introduced new ways of creating, sharing, and receiving information.
+
+THE FOUR AGES OF MEDIA
+
+1. PRE-INDUSTRIAL AGE (Before 1700s)
+People used simple materials and tools to communicate and record information.
+Examples: Cave paintings, clay tablets, papyrus, Acta Diurna, and printing using woodblocks.
+
+2. INDUSTRIAL AGE (1700s–1930s)
+Machines and mass production improved communication and made information more accessible.
+Examples: Printing press, typewriter, telephone, telegraph, and motion pictures.
+
+3. ELECTRONIC AGE (1930s–1980s)
+Electricity and electronic devices made communication faster and more convenient.
+Examples: Transistor radio, television, EDSAC, UNIVAC, and personal computers.
+
+4. INFORMATION AGE (1900s–2000s)
+Digital technology and the internet allowed people to communicate and share information quickly around the world.
+Examples: Internet, websites, social media, smartphones, laptops, and cloud technology.
+
+LESSON TAKEAWAY
+
+The evolution of media shows how technology changed communication from simple traditional methods to fast and digital platforms. Media continues to develop and influence how people access and share information.`
+},
+{
+    number: 3,
+    icon: "🎨",
+    title: "Types of Media",
+    description: "Explore different forms of media.",
+    content: `LESSON 3: TYPES OF MEDIA
+
+1. Print Media – Media that uses paper and ink to share information. Examples are books, newspapers, magazines, journals, newsletters, and brochures.
+
+2. Text Media – A type of media that uses written words to communicate ideas. It can be handwritten, printed, or displayed on a screen.
+
+3. Typography – The art and technique of arranging written words to make them visually appealing and readable.
+
+4. Visual Media – Media that uses pictures, photos, images, and graphics to communicate through sight.
+
+5. Graphic Design – The process of creating and arranging visual elements to communicate information for a specific purpose.
+
+6. Infographics – Visual presentation of information using charts, graphs, and images to make complex information easier to understand.
+
+7. Cartoons – Drawings used for humor, satire, or entertainment.
+
+8. Photography – Images captured using cameras or phones.
+
+9. Broadcast Media – A type of media that uses airwaves to deliver information to audiences. Examples are radio and television.
+
+10. Audio Media – A type of broadcast media that uses sound or voice recordings to deliver information.
+
+11. Multimedia – Combines different forms of media such as text, graphics, pictures, videos, animations, and audio in digital form.
+
+12. New Media – Uses digital technology and platforms to organize and share content. Examples are podcasts, augmented reality, video games, blogs, and wikis.
+
+13. Media Convergence – The combination of different media technologies and tools into one digital platform.
+
+Example: Smartphone – combines camera, radio, web browser, and video features.`
+},
+{
+    number: 4,
+    icon: "🔎",
+    title: "Media and Information Sources",
+    description: "Understand where information comes from.",
+    content: `LESSON 4: MEDIA AND INFORMATION SOURCES
+
+There are three main sources of information: Indigenous Knowledge, Libraries, and the Internet. Information sources can also be classified as Primary, Secondary, and Tertiary.
+
+1. INDIGENOUS KNOWLEDGE
+
+Traditional knowledge kept by a specific group or community. It is passed from one generation to another through oral traditions and cultural practices.
+
+IMPORTANT FEATURES:
+• Locally appropriate
+• Restraint in resource exploitation
+• Diversified production systems
+• Respect for nature
+• Human dependence on nature
+• Flexibility
+• Social responsibility
+
+2. LIBRARY
+
+A place or organization that collects books, journals, and other information resources for people to read, use, or borrow.
+
+LIBRARY SERVICES:
+• User Services – Connect people to the information they need.
+• Technical Services – Gather, catalog, and prepare library materials.
+• Computer Services – Maintain databases, software, websites, and computer hardware.
+• Administrative Services – Manage library operations, employees, and budgets.
+
+TYPES OF LIBRARIES:
+• Academic Libraries – Serve colleges and universities.
+• Public Libraries – Serve cities and towns.
+• School Libraries – Serve students from Kindergarten to Grade 12.
+• Special Libraries – Found in places such as hospitals, museums, and businesses.
+
+3. INTERNET
+
+A worldwide network of interconnected computers that provides information and communication services.
+
+OTHER CLASSIFICATIONS OF INFORMATION SOURCES:
+
+1. PRIMARY SOURCES
+Original materials that have not been filtered, modified, or interpreted.
+Examples: Interviews, emails, letters, photographs, speeches, original documents, and research results.
+
+2. SECONDARY SOURCES
+Materials that explain, analyze, interpret, or evaluate primary sources.
+Examples: Indexes, bibliographies, reviews, treatises, encyclopedias, and dictionaries.
+
+3. TERTIARY SOURCES
+Materials that collect and organize primary and secondary sources.
+Examples: Directories, yearbooks, guides to literature, and bibliographies of bibliographies.
+
+LESSON TAKEAWAY
+
+Information comes from different sources. Knowing how to identify primary, secondary, and tertiary sources helps us find and use information properly.`
+},
+{
+    number: 5,
+    icon: "💬",
+    title: "Media and Information Languages",
+    description: "Learn how media communicates messages.",
+    content: `LESSON 5: MEDIA AND INFORMATION LANGUAGES
+
+Media language refers to the codes, symbols, conventions, and techniques used by media producers to communicate ideas and messages to their audiences.
+
+IMPORTANT CONCEPTS:
+
+1. LANGUAGE – The technical and symbolic ingredients or codes used to communicate ideas, information, and knowledge.
+
+2. MEDIA LANGUAGES – Codes, conventions, formats, symbols, and narrative structures that help audiences understand media messages.
+
+3. DENOTATIVE MEANING – The literal or direct meaning of a media text.
+
+4. CONNOTATIVE MEANING – The different interpretations or meanings suggested by a media text based on culture, values, and beliefs.
+
+MEDIA CODES:
+
+1. SYMBOLIC CODES – Meanings interpreted by the audience.
+Examples:
+• Setting – The time and place of a scene.
+• Mise en Scene – Everything within the frame, including costumes, props, and set design.
+• Acting – How actors portray characters.
+• Color – Colors used to create meanings or moods.
+
+2. TECHNICAL CODES – Techniques used in creating media products.
+Examples:
+• Camerawork – Camera operation, positioning, and movement.
+• Editing – Selecting and arranging images and sounds.
+• Audio – The use of sounds.
+• Lighting – The use of light to create a particular mood.
+
+3. WRITTEN CODES – The written and spoken language used in media products.
+Examples:
+• Printed text visible within the media frame.
+• Dialogues and spoken language.
+• Song lyrics.
+
+MEDIA CONVENTIONS:
+
+Recognized ways of using and organizing media codes.
+
+1. FORM CONVENTIONS – Expected arrangement of media elements. Example: movie titles and main casts appear at beginning, credits at end.
+
+2. STORY CONVENTIONS – Basic structures of narratives. Examples: narrative structures, character construction, point of view.
+
+3. GENRE CONVENTIONS – Common elements used in a certain type of media. Examples: characters, settings, themes associated with a specific genre.
+
+MEDIA PRODUCERS, STAKEHOLDERS, AND AUDIENCE:
+
+• Media Producers – People who initiate, plan, and produce media texts.
+• Stakeholders – People or organizations that share the same interests or intentions.
+• Audience – People who receive and interpret media messages.
+
+AUDIENCE ANALYSIS:
+
+The process of studying the demographics, values, beliefs, and attitudes of an audience.
+
+AUDIENCE ENGAGEMENT AND OTHER CONCEPTS:
+
+• Audience Engagement – The reaction of the audience to a media text.
+• Audience Expectations – What the audience anticipates from the media text.
+• Audience Foreknowledge – The exact information the audience already knows about the media output.
+• Audience Identification – The connection built between the media text and the audience.
+• Audience Placement – Strategies used to make the audience feel that the media text is made specifically for them.
+• Audience Research – Monitoring the audience before, during, and after media production.
+
+LESSON TAKEAWAY
+
+Understanding media languages, codes, and conventions helps us interpret media messages and understand how producers communicate with their target audiences.`
+},
+{
+    number: 6,
+    icon: "⚖️",
+    title: "Legal, Ethical, and Societal Issues in Media and Information",
+    description: "Learn digital rights and responsibilities.",
+    content: `LESSON 6: LEGAL, ETHICAL, AND SOCIETAL ISSUES IN MEDIA AND INFORMATION
+
+Digital citizens should understand their rights and responsibilities as users and creators of media and information.
+
+1. INTELLECTUAL PROPERTY (IP)
+
+Intellectual property refers to creations of the mind, such as inventions, literary and artistic works, designs, symbols, names, and images used in commerce. The Intellectual Property Code (RA 8293) protects creators' rights. Unauthorized use may be intellectual property infringement.
+
+TYPES OF INTELLECTUAL PROPERTY:
+• Copyright – Rights creators have over literary and artistic works, such as books, films, music, and artwork.
+• Patent – An exclusive right granted for an invention.
+• Trademark – A sign that distinguishes the goods or services of one business from another. TM may indicate a claim or pending registration; ® indicates a registered mark.
+• Industrial Design – The ornamental or aesthetic appearance of an item, such as its shape, patterns, lines, or colors.
+• Geographical Indication – A sign used on products whose qualities or characteristics are connected to their place of origin.
+
+2. FAIR USE
+
+Fair use is a legal principle that may allow limited use of copyrighted material without permission for purposes such as criticism, commentary, news reporting, research, and teaching. Factors include the purpose of use, nature of the work, amount used, and effect on the work's market. Always give credit and check whether your use is allowed.
+
+3. CREATIVE COMMONS
+
+Creative Commons licenses provide standardized ways for creators to allow others to share or use their work under stated conditions.
+
+4. NETIQUETTE
+
+Netiquette means network etiquette or proper behavior online. Virginia Shea's ten rules include:
+• Remember the human.
+• Follow the same standards online as in real life.
+• Know where you are in cyberspace.
+• Respect others' time and bandwidth.
+• Make yourself look good online.
+• Share expert knowledge.
+• Keep flame wars under control.
+• Respect others' privacy.
+• Do not abuse your power.
+• Be forgiving of others' mistakes.
+
+5. DIGITAL FOOTPRINT AND PRIVACY
+
+A digital footprint is the record of activities and information left online, such as social media posts, websites visited, and subscriptions. Think before sharing and respect other people's privacy.
+
+6. DIGITAL DIVIDE
+
+The digital divide is the gap between groups in their access to, knowledge of, and use of information and communication technology. It may be affected by location, income, and age.
+
+7. COMPUTER ADDICTION
+
+Computer addiction refers to an unhealthy overdependence on computer or internet use that may affect daily activities and well-being.
+
+8. CYBERBULLYING
+
+Cyberbullying is the use of digital communication to hurt or harass another person, such as through hurtful messages, embarrassing posts, or malicious rumors. If it happens, do not join in; save relevant evidence and seek help from a trusted adult or school staff.
+
+RELEVANT PHILIPPINE LAWS:
+• Intellectual Property Code of the Philippines (RA 8293).
+• Cybercrime Prevention Act of 2012 (RA 10175).
+
+LESSON TAKEAWAY
+
+Use media responsibly: respect creators, follow online etiquette, protect privacy, and ask trusted people for help when online behavior becomes harmful.`
+},
+{
+    number: 7,
+    icon: "🌐",
+    title: "Opportunities, Challenges, and Power of Media and Information",
+    description: "Discover the effects and influence of media.",
+    content: `LESSON 7: OPPORTUNITIES, CHALLENGES, AND POWER OF MEDIA AND INFORMATION
+
+Media and information provide opportunities for learning, communication, expression, and participation. They also bring challenges that users must understand and manage.
+
+OPPORTUNITIES
+
+• Online Shopping – Buying goods through a website or online platform.
+• Citizen Journalism – Members of the public collect, share, and discuss news or information, often using the internet.
+• Online Education – Learning through online courses and platforms, sometimes without face-to-face classes.
+
+CHALLENGES
+
+• Age-inappropriate or illegal content.
+• Privacy invasion and identity theft when personal information is exposed.
+• Phishing – A fraudulent attempt to get sensitive information such as usernames or passwords.
+• Misuse of the internet and digital platforms.
+
+CHALLENGE AND THREAT
+
+A challenge may provide an opportunity for growth when a person can use coping strategies. A threat is perceived as likely to lead to failure when a person feels unable to cope.
+
+RESPECTFUL ONLINE COMMUNICATION
+
+Respect means listening and trying to understand other people's perspectives. People can disagree while communicating peacefully.
+
+LAWS AND MISUSE OF MEDIA
+
+• Libel – Malicious publication of a false statement that damages a person's reputation. A spoken defamatory statement is called slander.
+• Piracy – Unauthorized copying or distribution of copyrighted content.
+• Cybercrime Prevention Act of 2012 (RA 10175) – Addresses cybercrime offenses, including identity theft and other computer- or internet-related offenses.
+
+INNOVATION
+
+Innovation is the development of a new method, process, or product to improve existing uses or meet new needs. Media innovation changes platforms, business models, and the ways media content is created.
+
+INFLUENCE OF MEDIA
+
+• Education – Digital media can support teaching, learning, critical thinking, and problem-solving.
+• Society – Media affects relationships and how people access information, entertainment, careers, and online services.
+• Economy – People can offer products and services online and find digital work, such as tutoring, art sales, photography, and IT-related jobs.
+• Politics – Social media helps political groups and government agencies communicate with the public. It can also spread fake news.
+
+DIGITAL DIPLOMACY
+
+Digital diplomacy, or e-diplomacy, is the use of social media and information technology by governments to communicate with the public, including people in other countries.
+
+LESSON TAKEAWAY
+
+Media creates opportunities and influences education, society, the economy, and politics. Use it thoughtfully, protect personal information, and check information before sharing.`
+},
+{
+    number: 8,
+    icon: "🚀",
+    title: "Current and Future Trends in Media and Information",
+    description: "Explore new technologies and online learning.",
+    content: `LESSON 8: CURRENT AND FUTURE TRENDS IN MEDIA AND INFORMATION
+
+PART 1: CURRENT AND FUTURE TECHNOLOGY TRENDS
+
+1. HAPTICS TECHNOLOGY
+Technology that uses touch feedback, such as force, vibration, or motion. It is used in game controllers, joysticks, steering wheels, smartphones, and virtual reality.
+
+2. CONTEXTUAL AWARENESS
+Technology that combines information from sensors, such as location and surroundings, with information such as calendars, social networks, and preferences to understand a user's context.
+
+3. VOICE AND TONE RECOGNITION
+Technology that analyzes a person's voice and tone. Possible uses include security, healthcare, and mobile applications.
+
+4. INTELLIGENT ROUTING TO DEVICES
+Mobile devices can help report a problem with its location and details so the responsible team can respond.
+
+5. EYE TRACKING TECHNOLOGY
+Technology that measures eye position and movement. Possible uses include healthcare, accessibility, driver safety, retail research, and human-computer interaction.
+
+6. INTERNET GLASSES
+Wearable devices designed to display digital information while allowing users to see their surroundings. Possible uses include directions and helpful information while doing everyday tasks.
+
+7. PROTOTYPE
+An original model used as a basis for developing a product. It should show important features of the planned final product.
+
+8. UBIQUITOUS LEARNING
+Learning that can happen anytime and anywhere through technology. Duolingo is an example of an app that offers interactive language lessons and tracks progress.
+
+9. 3D ENVIRONMENTS AND 3D PRINTING
+A 2D object has length and width, while a 3D object also has depth. 3D printing, also called additive manufacturing, builds an object layer by layer from a digital design. It supports rapid prototyping, customized products, and complex designs. 3D films create an illusion of depth, while holograms are presented as three-dimensional images.
+
+PART 2: MASSIVE OPEN ONLINE COURSE (MOOC)
+
+MEANING OF MOOC
+• Massive – Can serve a large number of learners.
+• Open – Designed to be accessible to many people.
+• Online – Delivered through the internet.
+• Course – Organized learning content.
+
+A MOOC is an online course that allows many learners from different places to participate. It may include recorded video lectures, readings, online assessments, and online discussions. The concept was introduced in 2008 by Dave Cormier for a course at the University of Manitoba.
+
+TYPES OF MOOC
+• xMOOC – Follows a more traditional course structure with recorded lectures, readings, discussions, and instructor-led activities.
+• cMOOC – Focuses on connection and collaboration, where learners find, evaluate, and contribute information through tools such as blogs, wikis, and social media.
+
+ADVANTAGES OF MOOC
+• Open access and flexible learning.
+• Video lessons can be reviewed.
+• Access to learning content from educational institutions.
+• Opportunities to collaborate with learners around the world.
+• Some courses allow learners to study at their own pace.
+
+EXAMPLES OF MOOC PLATFORMS
+Coursera, edX, Udacity, and FutureLearn.
+
+LESSON TAKEAWAY
+
+New technologies continue to change how people communicate, create, and learn. MOOCs make online learning available to large numbers of people.`
+}
+];
+
+// =====================================
+// PAGE NAVIGATION
+// =====================================
+
+function showPage(pageId, button) {
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
+
+    document.getElementById(pageId).classList.add("active");
+
+    document.querySelectorAll("nav button").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    if (button) {
+        button.classList.add("active");
+    } else {
+        document.querySelectorAll("nav button").forEach(btn => {
+            if (btn.textContent.toLowerCase() === pageId) {
+                btn.classList.add("active");
+            }
+        });
+    }
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// =====================================
+// LESSON FUNCTIONS
+// =====================================
+
+let currentLesson = 0;
+
+function renderLessons() {
+    const searchInput = document.getElementById("searchInput");
+    const search = searchInput.value.toLowerCase();
+
+    const lessonList = document.getElementById("lessonList");
+    const lessonDetail = document.getElementById("lessonDetail");
+
+    lessonDetail.innerHTML = "";
+    lessonList.style.display = "grid";
+
+    const filteredLessons = lessons.filter(lesson =>
+        lesson.title.toLowerCase().includes(search) ||
+        lesson.description.toLowerCase().includes(search) ||
+        lesson.content.toLowerCase().includes(search)
+    );
+
+    if (filteredLessons.length === 0) {
+        lessonList.innerHTML =
+            "<p>No lessons found. Try another keyword. ♡</p>";
+        return;
+    }
+
+    lessonList.innerHTML = filteredLessons.map(lesson => `
+        <div class="lesson-card"
+             onclick="openLesson(${lesson.number - 1})">
+            <div class="lesson-icon">${lesson.icon}</div>
+            <h3>Lesson ${lesson.number}</h3>
+            <h4>${lesson.title}</h4>
+            <p>${lesson.description}</p>
+            <br>
+            <span>Read Summary →</span>
+        </div>
+    `).join("");
+}
+
+function openLesson(index) {
+    currentLesson = index;
+
+    const lesson = lessons[index];
+
+    document.getElementById("lessonList").style.display = "none";
+
+    document.getElementById("lessonDetail").innerHTML = `
+        <div class="card">
+            <h2>${lesson.icon} ${lesson.title}</h2>
+
+            <div class="lesson-content">${escapeHTML(lesson.content)}</div>
+
+            <div class="lesson-buttons">
+                <button class="main-button"
+                    onclick="changeLesson(-1)"
+                    ${index === 0 ? "disabled" : ""}>
+                    ← Previous
+                </button>
+
+                <button class="main-button"
+                    onclick="showAllLessons()">
+                    All Lessons
+                </button>
+
+                <button class="main-button"
+                    onclick="changeLesson(1)"
+                    ${index === lessons.length - 1 ? "disabled" : ""}>
+                    Next →
+                </button>
+            </div>
+        </div>
+    `;
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function changeLesson(direction) {
+    const newIndex = currentLesson + direction;
+
+    if (newIndex >= 0 && newIndex < lessons.length) {
+        openLesson(newIndex);
+    }
+}
+
+function showAllLessons() {
+    document.getElementById("lessonDetail").innerHTML = "";
+    document.getElementById("lessonList").style.display = "grid";
+    document.getElementById("searchInput").value = "";
+    renderLessons();
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// =====================================
+// HTML ESCAPING
+// =====================================
+
+function escapeHTML(text) {
+    return String(text).replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+    })[character]);
+}
+
+// =====================================
+// MEMBER PROFILES AND INTRODUCTIONS
+// =====================================
+
+function renderMembers() {
+    const memberList = document.getElementById("memberList");
+
+    memberList.innerHTML = members.map(member => `
+        <div class="member-card">
+            ${member.photo ? `
+                <img
+                    src="${member.photo}"
+                    alt="${member.name}"
+                    onerror="this.style.display='none'"
+                >
+            ` : ""}
+
+            <h3>${escapeHTML(member.name)}</h3>
+
+            <p class="member-role">${escapeHTML(member.role)}</p>
+
+            <div class="member-introduction">
+                ${escapeHTML(member.introduction || "Introduction coming soon!")}
+            </div>
+        </div>
+    `).join("");
+}
+
+// =====================================
+// ANIMATED CAT
+// =====================================
+
+function toggleCat() {
+    const message = document.getElementById("catMessage");
+
+    if (message.style.display === "block") {
+        message.style.display = "none";
+    } else {
+        message.style.display = "block";
+    }
+}
+
+// =====================================
+// START WEBSITE
+// =====================================
+
+renderLessons();
+renderMembers();
+
+</script>
+
+</body>
+</html>
+        
